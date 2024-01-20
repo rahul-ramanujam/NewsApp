@@ -1,7 +1,9 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-}
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
+ }
 
 android {
     namespace = "com.rahulrv.newsinshort"
@@ -50,11 +52,17 @@ android {
 }
 
 dependencies {
+    implementation(Dependencies.coreKtx)
+    implementation(Dependencies.androidXLifecycle)
+    implementation(Dependencies.activityCompose)
+    implementation(platform(Dependencies.androidxCompose))
+    implementation(Dependencies.hiltAndroid)
+    kapt(Dependencies.hiltAndroid)
+    kapt(Dependencies.hiltCompiler)
 
-    implementation("androidx.core:core-k tx:1.10.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.activity:activity-compose:1.7.0")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation(Dependencies.hiltNavigationCompose)
+    implementation("androidx.navigation:navigation-compose:2.7.6")
+
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -66,4 +74,9 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+}
+
+kapt {
+    correctErrorTypes = true
 }
