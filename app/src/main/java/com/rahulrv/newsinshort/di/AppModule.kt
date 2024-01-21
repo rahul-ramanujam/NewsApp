@@ -1,6 +1,9 @@
 package com.rahulrv.newsinshort.di
 
 import com.rahulrv.newsinshort.data.api.ApiService
+import com.rahulrv.newsinshort.data.datasource.NewsDataSource
+import com.rahulrv.newsinshort.data.datasource.NewsDataSourceImpl
+import com.rahulrv.newsinshort.ui.repository.NewsRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -38,7 +41,7 @@ class AppModule {
             .add(KotlinJsonAdapterFactory()).build()
 
         return Retrofit.Builder()
-            .baseUrl("https://newsapi.org/ ")
+            .baseUrl("https://newsapi.org/")
             .client(httpClient.build())
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
@@ -49,4 +52,17 @@ class AppModule {
     fun providesApiService(retrofit: Retrofit) : ApiService {
         return retrofit.create(ApiService::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun providesNewsDataSource(apiService: ApiService) : NewsDataSource {
+        return NewsDataSourceImpl(apiService)
+    }
+
+    @Singleton
+    @Provides
+    fun providesNewsRepository(dataSource: NewsDataSource): NewsRepository {
+        return NewsRepository(dataSource)
+    }
+
 }
