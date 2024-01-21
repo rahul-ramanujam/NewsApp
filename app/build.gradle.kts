@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
     kotlin("kapt")
+    id("com.google.dagger.hilt.android")
  }
 
 android {
@@ -57,11 +57,16 @@ dependencies {
     implementation(Dependencies.activityCompose)
     implementation(platform(Dependencies.androidxCompose))
     implementation(Dependencies.hiltAndroid)
-    kapt(Dependencies.hiltAndroid)
+    kapt(Dependencies.hiltAndroidcompiler)
     kapt(Dependencies.hiltCompiler)
 
     implementation(Dependencies.hiltNavigationCompose)
-    implementation("androidx.navigation:navigation-compose:2.7.6")
+
+    implementation(Dependencies.retrofit)
+    implementation(Dependencies.okhttp)
+    implementation(Dependencies.moshi)
+    implementation(Dependencies.moshiConverter)
+    implementation(Dependencies.loggingInterceptor)
 
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
